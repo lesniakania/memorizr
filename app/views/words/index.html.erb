@@ -1,0 +1,11 @@
+<% if @words.empty? %>
+  <div class="notice">You haven't got any words yet.</div>
+<% else %>
+  <ul>
+    <% @words.each do |word| %>
+      <li>
+        <%= word.value %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

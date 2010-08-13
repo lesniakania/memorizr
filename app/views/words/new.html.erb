@@ -1,0 +1,18 @@
+<%= form_for @word, :html => { :id => 'translate-form' } do |f| %>
+  <div>
+    <%= f.label :value, 'Word' %>
+    <%= f.text_field :value %>
+    <%= error_on(@word, :value) %>
+  </div>
+  <div>
+    <%= f.label :lang, 'From' %>
+    <%= f.select :lang, @available_langs, :selected => Lang.default_from %>
+  </div>
+  <div>
+    <%= label_tag :word_to, 'To' %>
+    <%= select_tag :word_to, options_for_select(@available_langs, :selected => Lang.default_to), :name => 'word[to]' %>
+  </div>
+  <div>
+    <%= f.submit 'Translate' %>
+  </div>
+<% end %>

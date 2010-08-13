@@ -1,0 +1,20 @@
+<div id="results">
+  <% if @results.empty? %>
+    <div class="notice">
+      No translation available.
+    </div>
+  <% else %>
+    Translation <span id="word" class="strong">
+    <%= @word %></span> from <span id="from" class="strong">
+    <%= @from %></span> to <span id="to" class="strong">
+    <%= @to %></span>:
+    <ul id="translation">
+      <% @results.each do |meaning| %>
+        <li>
+          <%= meaning %>
+        </li>
+      <% end %>
+    </ul>
+    <%= submit_tag 'Save', :id => 'save-button' %>
+  <% end %>
+</div>

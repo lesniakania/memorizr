@@ -19,3 +19,8 @@ Rspec.configure do |config|
     DataMapper::Model.descendants.each {|m| m.all.destroy }
   end
 end
+
+
+def login(user, controller)
+  controller.any_instance.stubs(:current_user).returns(user)
+end

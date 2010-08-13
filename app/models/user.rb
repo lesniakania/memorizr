@@ -9,6 +9,8 @@ class User
 
   validates_presence_of :email, :password
 
+  has n, :words
+
   validates_format_of :email, :with => Regexp::EMAIL
   validates_length_of :password, :min => 3, :max => 256
 
