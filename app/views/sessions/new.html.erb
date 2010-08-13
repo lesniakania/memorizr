@@ -1,0 +1,15 @@
+<%= form_for @session_form, :url => '/session' do |f| %>
+  <%= error_on @session_form, :session %>
+
+  <div>
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+  <div>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+  <div>
+    <%= f.submit 'Login' %>
+  </div>
+<% end %>
