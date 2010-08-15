@@ -12,3 +12,7 @@ end
 Factory.define :lang do |u|
   u.sequence(:value) { "en" }
 end
+
+def create_default_langs
+  Lang.defaults.each { |l| Factory.create(:lang, :value => l) }
+end

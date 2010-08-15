@@ -6,11 +6,17 @@ class Lang
 
   validates_presence_of :value
 
+  DEFAULTS = { :from => 'en', :to => 'pl' }
+
   def self.default_from
-    'en'
+    DEFAULTS[:from]
   end
 
   def self.default_to
-    'pl'
+    DEFAULTS[:to]
+  end
+
+  def self.defaults
+    DEFAULTS.values
   end
 end

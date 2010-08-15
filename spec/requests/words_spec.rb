@@ -8,15 +8,50 @@ describe WordsController do
     end
 
     describe "index" do
-      it "should show only current users words" do        
-        @word = Factory.create(:word, :user => @user)
+      it "should show only current users words" do
+        @word = Factory.create(:word, :user => @user, :lang => @en)
+        @meaning = Factory.create(:word, :user => @user, :lang => @pl)
+        @word.meanings << @meaning
+        @word.save
+        
         user = Factory.create(:user)
         word = Factory.create(:word, :user => user)
-        
+        meaning = Factory.create(:word, :user => @user, :lang => @pl)
+        word.meanings << meaning
+        word.save
+
         get(words_path)
         response.should be_successful
         response.body.should include(@word.value)
         response.body.should_not include(word.value)
+      end
+
+      it "should be able to filter words" do
+        hr = Factory.create(:lang, :value => 'hr')
+
+        en_word1 = Factory.create(:word, :lang => @en, :value => 'en_word1', :user => @user)
+        en_word2 = Factory.create(:word, :lang => @en, :value => 'en_word2', :user => @user)
+        pl_word = Factory.create(:word, :lang => @pl, :value => 'pl_word', :user => @user)
+        hr_word1 = Factory.create(:word, :lang => hr, :value => 'hr_word1', :user => @user)
+        hr_word2 = Factory.create(:word, :lang => hr, :value => 'hr_word2', :user => @user)
+
+        en_word1.meanings << pl_word
+        en_word1.meanings << hr_word1
+        en_word1.save
+        
+        en_word2.meanings << hr_word2
+        en_word2.save
+
+        params = { :from => 'en', :to => 'pl' }
+        get(words_path, params)
+
+        response.should be_successful
+        en_word1.reload
+        response.body.should include(en_word1.value)
+        response.body.should include(pl_word.value)
+        response.body.should_not include(en_word2.value)
+        response.body.should_not include(hr_word1.value)
+        response.body.should_not include(hr_word2.value)
       end
     end
 
@@ -70,7 +105,7 @@ describe WordsController do
         response.should be_successful
       end
 
-      it "should render translate form when valid data given" do
+      it "should render translate form when invalid data given" do
         @params[:word] = nil
         post(save_words_path, @params)
         response.status.should == 409

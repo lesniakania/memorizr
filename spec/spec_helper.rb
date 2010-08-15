@@ -17,6 +17,9 @@ Rspec.configure do |config|
 
   config.before(:each) do
     DataMapper::Model.descendants.each {|m| m.all.destroy }
+    create_default_langs
+    @en = Lang.first(:value => 'en')
+    @pl = Lang.first(:value => 'pl')
   end
 end
 

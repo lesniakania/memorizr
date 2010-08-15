@@ -2,9 +2,14 @@ class WordsController < ApplicationController
   before_filter :ensure_authenticated
 
   def index
-    lang_val = params[:lang] || Lang.default_from
-    lang = Lang.first(:value => lang_val)
-    @words = current_user.words(:lang => lang)
+    from = params[:from] || Lang.default_from
+    to = params[:to] || Lang.default_to
+    @from = Lang.first(:value => from)
+    @to = Lang.first(:value => to)
+    @available_langs = Lang.all.map { |l| [l.value, l.value] }
+
+    words = current_user.words(:lang => @from)
+    @words = words.select { |w| w.meanings.any? { |m| m.lang == @to } }
   end
 
   def new

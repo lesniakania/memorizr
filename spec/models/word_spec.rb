@@ -27,14 +27,26 @@ describe Word do
   end
 
   describe "save_with_meanings" do
+    before(:each) do
+      @user = Factory.create(:user)
+      @lang = Factory.create(:lang)
+      @word = 'word1'
+      @meanings = ['m1', 'm2']
+    end
+
     it "should save word with it's meanings properly" do
-      user = Factory.create(:user)
-      lang = Factory.create(:lang)
-      word = 'word1'
-      meanings = ['word2']
-      Word.save_with_meanings(user, word, lang.value, lang.value, meanings)
-      Word.first(:value => 'word1').should_not be_nil
-      Word.first(:value => meanings.first).should_not be_nil
+      Word.save_with_meanings(@user, @word, @lang.value, @lang.value, @meanings)
+      saved_word = Word.first(:value => @word)
+      saved_word.should_not be_nil
+      @meanings.each { |m| Word.first(:value => m).should_not be_nil }
+      Set.new(saved_word.meanings.map(&:value)).should == Set.new(@meanings)
+    end
+
+    it "should return false if invalid data given" do
+      Word.save_with_meanings(@user, @word, @lang.value, nil, @meanings)
+      saved_word = Word.first(:value => @word)
+      saved_word.should be_nil
+      @meanings.each { |m| Word.first(:value => m).should be_nil }
     end
   end
 end

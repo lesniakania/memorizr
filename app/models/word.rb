@@ -17,9 +17,16 @@ class Word
     lang_from = Lang.first(:value => from)
     lang_to = Lang.first(:value => to)
     word = Word.new(:value => value, :lang => lang_from, :user => user)
-    meanings.each do |meaning|
-      word.meanings << Word.create(:value => meaning, :lang => lang_to, :user => user)
+    words = meanings.map { |m| Word.new(:value => m, :lang => lang_to, :user => user) }
+    if word.valid? && words.all?(&:valid?)
+      word.save
+      words.each do |meaning|
+        meaning.save
+        word.meanings << meaning
+      end
+      word.save
+    else
+      false
     end
-    word.save
   end
 end
