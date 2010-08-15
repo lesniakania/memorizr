@@ -1,4 +1,4 @@
-Memorizr::Application.routes.draw do |map|
+Memorizr::Application.routes.draw do
   resources :words do
     collection do
       post :translate
