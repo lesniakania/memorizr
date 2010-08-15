@@ -1,0 +1,291 @@
+/*
+*   very dark blue:   #000b1d
+*   dark blue:        #002d77
+*   middle blue:      #3b73cf
+*   light blue:       #77a1e5
+*   very light blue:  #95baf8
+*/
+
+#wrapper {
+  margin: 0 auto;
+  width: 680px;
+}
+
+a {
+  color: #002d77;
+  font-weight: bold;
+}
+
+input[type=submit]::-moz-focus-inner, input[type=button]::-moz-focus-inner {
+    border : 0px;
+}
+
+/*for IE8 */
+a, input[type=submit]:focus, input[type=button]:focus {
+    outline : none;
+}
+
+
+a:hover {
+  color: #3b73cf;
+}
+
+h1 {
+  font-size: 18px;
+  margin: 0 0 25px;
+  padding: 25px 35px 20px;
+  color: #002d77;
+  -moz-border-radius-topleft: 15px;
+  -moz-border-radius-topright: 15px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 608px;
+  z-index: 1;
+  background: #95baf8;
+  border-bottom: 1px #002d77 solid;
+}
+
+body {
+  font-size: 15px;
+  font-family: arial;
+  color: #000b1d;
+}
+
+br {
+  clear: both;
+}
+
+form div {
+  position: relative;
+  height: 75px;
+}
+
+label {
+  position: absolute;
+  top: 0;
+  left: 5px;
+  font-size: 13px;
+}
+
+input {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  height: 30px;
+  padding: 15px 10px 0;
+  font-size: 14px;
+  border: 1px solid #002d77;
+  -moz-border-radius: 10px;
+}
+
+select {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  height: 45px;
+  padding: 13px 15px 10px;
+  font-size: 14px;
+  border: 1px solid #002d77;
+  -moz-border-radius: 10px;
+}
+
+option {
+  padding: 5px;
+  font-size: 12px;
+  text-align: center;
+  border: 1px solid #002d77;
+}
+
+.buttons {
+  height: 45px;
+}
+
+.buttons input[type=submit] {
+  padding: 10px;
+  background: #3b73cf;
+  cursor: pointer;
+  width: 100px;
+  height: 40px;
+  top: 5px;
+}
+
+.buttons input[type=submit]:hover {
+  background: #95baf8;
+}
+
+#logo {
+  width: 150px;
+  height: 80px;
+  background: url(../images/logo.png) 0 0 no-repeat;
+  padding: 25px 0 0 80px;
+  color: #002d77;
+  font-size: 26px;
+  font-weight: bold;
+  font-family: arial;
+  float: left;
+}
+
+#logo-last-letter {
+  color: #000b1d;
+}
+
+#right-menu {
+  float: right;
+  margin: 32px 5px 0;
+}
+
+#right-menu .action {
+  float: right;
+}
+
+#logout-icon, #login-icon {
+  width: 24px;
+  height: 24px;
+  float: right;
+  margin: 3px 0 10px 0;
+}
+
+#login-icon {
+  background: url(../images/login.png) 0 0 no-repeat;
+}
+
+#logout-icon {
+  background: url(../images/logout.png) 0 0 no-repeat;
+}
+
+#left-menu {
+  display: inline;
+  float: left;
+  margin: 32px 0 0;
+}
+
+#left-menu li {
+  display: inline;
+  margin: 0 5px;
+}
+
+#header {
+  height: 100px;
+  clear: both;
+}
+
+.box {
+  background: #77a1e5;
+  border: 1px #002d77 solid;
+  -moz-border-radius: 15px;
+  padding: 100px 35px 35px;
+  position: relative;
+}
+
+#login-box {
+  min-height: 150px;
+}
+
+#about-box {
+  float: left;
+  width: 260px;
+  border-right: 1px #002d77 solid;
+  padding-right: 35px;
+  line-height: 20px;
+}
+
+#form-box {
+  float: left;
+  width: 260px;
+  padding-left: 35px;
+}
+
+#form-box input {
+  width: 260px;
+}
+
+#form-box input[type=submit] {
+  width: 78px;
+}
+
+.group select, .group input, .group #arrow {
+  position: static;
+  float: left;
+}
+
+.group {
+  clear: both;
+}
+
+#word_lang {
+  margin-right: 25px;
+}
+
+#word_to {
+  margin-left: 25px;
+}
+
+#word_submit {
+  margin-left: 30px;
+  height: 45px;
+  width: 135px;
+}
+
+#arrow {
+  height: 45px;
+  width: 45px;
+}
+
+#word_value {
+  width: 392px;
+}
+
+#translate-form, #filter-form {
+  margin: 0 auto;
+  width: 430px;
+}
+
+#save-button {
+  position: static;
+}
+
+#results, #words-index-box {
+  margin: 15px 0;
+}
+
+.strong {
+  font-weight: bold;
+}
+
+ul.custom {
+  list-style-type: none;
+  font-size: 13px;
+}
+
+ul.custom li {
+  padding-left: 30px;
+  background: #83abec url('../images/plus.png') 0 0 no-repeat;
+  line-height: 24px;
+  border: 1px solid #1E64C8;
+  margin-top: 7px;
+  width: 500px;
+  cursor: pointer;
+}
+
+ul.custom ol {
+  margin: 0;
+  padding: 0;
+}
+
+ul.custom ol li {
+  background: none;
+  border: none;
+  padding: 3px 0;
+  margin: 0;
+  height: 12px;
+}
+
+ul.custom dt {
+  height: 30px;
+}
+
+ul.custom dd {
+  display: none;
+  margin: 0 10px 20px;
+}

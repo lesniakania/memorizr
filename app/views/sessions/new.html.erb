@@ -1,15 +1,33 @@
-<%= form_for @session_form, :url => '/session' do |f| %>
-  <%= error_on @session_form, :session %>
+<div class="box" id="login-box">
+  <div id="about-box">
+    <p>
+      <strong>Memorizr</strong> is tool for translating and saving words.
+      Have you ever noticed that you are checking the same words all the time?
+      But you don't have time to mark down by yourself?
+      <strong>Memorizr</strong> is for you then!
+      You can translate new word, save it, list all your words with it's translations.
+    </p>
+    <p>
+      Just mail me for create an account <%= mail_to 'lesniakania [@] gmail.com' %>.
+    </p>
+  </div>
+  <div id="form-box">
+    <%= form_for @session_form, :url => '/session' do |f| %>
+      <%= error_on @session_form, :session %>
 
-  <div>
-    <%= f.label :email %>
-    <%= f.text_field :email %>
+      <div>
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+      </div>
+      <div>
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+      </div>
+      <div class="buttons">
+        <%= f.submit 'Login' %>
+      </div>
+    <% end %>
   </div>
-  <div>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-  </div>
-  <div>
-    <%= f.submit 'Login' %>
-  </div>
-<% end %>
+  <br />
+</div>
+

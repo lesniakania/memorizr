@@ -4,8 +4,15 @@
     <%= render :partial => '/layouts/head' %>
   </head>
   <body>
-    <%= render :partial => '/layouts/top' %>
-    <%= render :partial => '/layouts/menu' %>
-    <%= yield %>
+    <div id="wrapper">
+      <div id="header">
+        <%= render :partial => 'layouts/logo' %>
+        <%= render :partial => '/layouts/left_menu' %>
+        <%= render :partial => '/layouts/right_menu' %>
+      </div>
+      <div id="content">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>

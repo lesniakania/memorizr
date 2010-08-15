@@ -5,12 +5,12 @@ $(document).ready(function() {
       if (resultsDiv.html()) {
         resultsDiv.replaceWith(results);
       } else {
-        $('#translate-form').after(results);
+        $('#translate-box').after(results);
       }
     });
 
     return false;
-  })
+  });
 
   $('#save-button').live('click', function() {
     var meanings = []
@@ -37,5 +37,11 @@ $(document).ready(function() {
     });
 
     return false;
-  })
+  });
+
+  $('ul.custom li').toggle(function() {
+    $(this).find('dd').slideDown();
+  }, function() {
+    $(this).find('dd').slideUp();
+  });
 });

@@ -1,0 +1,9 @@
+<div id="right-menu">
+  <% if current_user %>
+    <%= link_to 'logout', logout_session_path, :class => 'action' %>
+    <span id ='logout-icon'></span>
+  <% else %>
+    <%= link_to 'login', new_session_path, :class => 'action' %>
+    <span id ='login-icon'></span>
+  <% end %>
+</div>
