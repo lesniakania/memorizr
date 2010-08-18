@@ -14,7 +14,7 @@
             </dt>
             <dd>
               <ol>
-                <% word.meanings.each do |meaning|  %>
+                <% word.meanings_to(@to).each do |meaning|  %>
                   <li><%= meaning.value %></li>
                 <% end %>
               </ol>

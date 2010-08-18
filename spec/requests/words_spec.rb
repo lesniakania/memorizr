@@ -9,16 +9,20 @@ describe WordsController do
 
     describe "index" do
       it "should show only current users words" do
-        @word = Factory.create(:word, :user => @user, :lang => @en)
-        @meaning = Factory.create(:word, :user => @user, :lang => @pl)
+        @word = Factory.create(:word, :lang => @en)
+        @meaning = Factory.create(:word, :lang => @pl)
         @word.meanings << @meaning
         @word.save
-        
-        user = Factory.create(:user)
-        word = Factory.create(:word, :user => user)
-        meaning = Factory.create(:word, :user => @user, :lang => @pl)
+        @user.words += [@word, @meaning]
+        @user.save
+
+        word = Factory.create(:word, :lang => @en)
+        meaning = Factory.create(:word, :lang => @pl)
         word.meanings << meaning
         word.save
+        user = Factory.create(:user)
+        user.words += [word, meaning]
+        user.save
 
         get(words_path)
         response.should be_successful
@@ -29,17 +33,18 @@ describe WordsController do
       it "should be able to filter words" do
         hr = Factory.create(:lang, :value => 'hr')
 
-        en_word1 = Factory.create(:word, :lang => @en, :value => 'en_word1', :user => @user)
-        en_word2 = Factory.create(:word, :lang => @en, :value => 'en_word2', :user => @user)
-        pl_word = Factory.create(:word, :lang => @pl, :value => 'pl_word', :user => @user)
-        hr_word1 = Factory.create(:word, :lang => hr, :value => 'hr_word1', :user => @user)
-        hr_word2 = Factory.create(:word, :lang => hr, :value => 'hr_word2', :user => @user)
+        en_word1 = Factory.create(:word, :lang => @en, :value => 'en_word1')
+        en_word2 = Factory.create(:word, :lang => @en, :value => 'en_word2')
+        pl_word = Factory.create(:word, :lang => @pl, :value => 'pl_word')
+        hr_word = Factory.create(:word, :lang => hr, :value => 'hr_word')
+        
+        @user.words += [en_word1, en_word2, pl_word, hr_word]
+        @user.save
 
-        en_word1.meanings << pl_word
-        en_word1.meanings << hr_word1
+        en_word1.meanings += [pl_word, hr_word]
         en_word1.save
         
-        en_word2.meanings << hr_word2
+        en_word2.meanings << hr_word
         en_word2.save
 
         params = { :from => 'en', :to => 'pl' }
@@ -47,11 +52,8 @@ describe WordsController do
 
         response.should be_successful
         en_word1.reload
-        response.body.should include(en_word1.value)
-        response.body.should include(pl_word.value)
-        response.body.should_not include(en_word2.value)
-        response.body.should_not include(hr_word1.value)
-        response.body.should_not include(hr_word2.value)
+        [en_word1, pl_word].each { |w| response.body.should include(w.value) }
+        [en_word2, hr_word].each { |w| response.body.should_not include(w.value) }
       end
     end
 
@@ -75,14 +77,14 @@ describe WordsController do
       end
 
       it "should render results properly" do
-        Translator.stubs(:retrieve_meanings).returns([])
+        Word.stubs(:extract_meanings).returns([])
         post(translate_words_path, @params)
         response.should be_successful
         response.should render_template('results')
       end
 
       it "should render translate form if any error appears during translation" do
-        Translator.stubs(:retrieve_meanings).raises('error')
+        Net::HTTP.stubs(:get_response).raises('error')
         post(translate_words_path, @params)
         response.status.should == 409
         response.should render_template('new')

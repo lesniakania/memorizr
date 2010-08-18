@@ -3,11 +3,20 @@ require 'uri'
 require 'nokogiri'
 
 class Translator
-  def self.retrieve_meanings(word, from, to)
+  def self.extract_meanings(word, from, to)
     url = build_url(word, from, to)
     response = Net::HTTP.get_response(url)
     doc = Nokogiri::HTML(response.body)
-    doc.xpath("//div[@id='dict']/table/tr/td/ol/li").map(&:text)
+    results = doc.xpath("//div[@id='dict']/table/tr/td/ol/li").map(&:text)
+    if results.empty?
+      results = doc.xpath("//span[@id='result_box']/span").map(&:text)
+    end
+    if results.empty?
+      results = doc.xpath("//span[@id='result_box']").map(&:text)
+    end
+    results
+  rescue
+    false
   end
 
   def self.build_url(word, from, to)

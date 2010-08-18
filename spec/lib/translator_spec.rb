@@ -14,7 +14,7 @@ describe Translator do
       </div>'
     Net::HTTP.stubs(:get_response).returns(response)
     response.stubs(:body).returns(response)
-    meanings = Translator.retrieve_meanings('miska', 'en', 'pl')
+    meanings = Translator.extract_meanings('miska', 'en', 'pl')
     Set.new(meanings).should == Set.new(['miska', 'misa', 'zaserwowac'])
   end
 end

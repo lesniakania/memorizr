@@ -6,11 +6,15 @@ end
 Factory.define :word do |u|
   u.sequence(:value) { |n| "word#{n}" }
   u.association(:lang)
-  u.association(:user)
 end
 
 Factory.define :lang do |u|
   u.sequence(:value) { "en" }
+end
+
+Factory.define :translation do |u|
+  u.association(:from) { Factory.create(:word) }
+  u.association(:to) { Factory.create(:word) }
 end
 
 def create_default_langs

@@ -9,13 +9,13 @@
       <%= @word %></span> from <span id="from" class="strong">
       <%= @from %></span> to <span id="to" class="strong">
       <%= @to %></span>:
-    <ul id="translation" class="custom">
+    <ol id="translation" class="custom">
       <% @results.each do |meaning| %>
         <li>
           <%= meaning %>
         </li>
       <% end %>
-    </ul>
+    </ol>
     <div class="buttons">
       <%= submit_tag 'Save', :id => 'save-button' %>
     </div>

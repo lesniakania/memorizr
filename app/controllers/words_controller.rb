@@ -8,8 +8,7 @@ class WordsController < ApplicationController
     @to = Lang.first(:value => to)
     @available_langs = Lang.all.map { |l| [l.value, l.value] }
 
-    words = current_user.words(:lang => @from)
-    @words = words.select { |w| w.meanings.any? { |m| m.lang == @to } }
+    @words = Word.extract_words(@from, @to, current_user)
   end
 
   def new
@@ -21,12 +20,14 @@ class WordsController < ApplicationController
     @word = params[:word][:value]
     @from = params[:word][:lang]
     @to = params[:word][:to]
-    @results = Translator.retrieve_meanings(@word, @from, @to)
-    render :partial => 'results'
-  rescue
-    @word = Word.new
-    @available_langs = Lang.all.map { |l| [l.value, l.value] }
-    render :new, :status => :conflict
+
+    if @results = Word.extract_meanings(@word, @from, @to)
+      render :partial => 'results'
+    else
+      @word = Word.new
+      @available_langs = Lang.all.map { |l| [l.value, l.value] }
+      render :new, :status => :conflict
+    end
   end
 
   def save

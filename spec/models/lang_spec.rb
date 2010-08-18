@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Lang do
   describe "validations" do
     before(:each) do
-      @lang = Factory.build(:lang)
+      @lang = Lang.first(:value => 'en')
     end
 
     it "should be valid" do
@@ -13,6 +13,12 @@ describe Lang do
     it "should not be valid without value" do
       @lang.value = nil
       @lang.should_not be_valid
+    end
+
+    it "should be unique" do
+      @lang.save
+      lang = Factory.build(:lang, :value => @lang.value)
+      lang.should_not be_valid
     end
   end
 

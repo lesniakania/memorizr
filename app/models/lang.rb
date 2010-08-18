@@ -5,6 +5,7 @@ class Lang
   property :value, String, :required => true, :length => 256
 
   validates_presence_of :value
+  validates_uniqueness_of :value
 
   DEFAULTS = { :from => 'en', :to => 'pl' }
 
