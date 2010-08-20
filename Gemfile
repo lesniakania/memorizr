@@ -13,7 +13,6 @@ gem 'dm-migrations'
 
 group :development do
   gem 'ruby_core_source', :require => 'ruby_core_source'
-  gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
 group :test do
@@ -22,3 +21,5 @@ group :test do
   gem 'mocha'
   gem "factory_girl_rails", "1.0"
 end
+
+gem 'heroku'
