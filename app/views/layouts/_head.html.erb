@@ -1,5 +1,7 @@
 <title>Memorizr</title>
 <%= stylesheet_link_tag :all %>
 <%= javascript_include_tag  'vendor/jquery-1.4.2.min', :cache => 'vendor' %>
-<%= javascript_include_tag  'application', :cache => 'application' %>
+<%= javascript_include_tag  'application',
+                            'lib/input_spinner',
+                            'lib/button_spinner' , :cache => 'application' %>
 <%= csrf_meta_tag %>

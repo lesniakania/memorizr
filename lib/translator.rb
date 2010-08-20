@@ -4,7 +4,7 @@ require 'nokogiri'
 
 class Translator
   def self.extract_meanings(word, from, to)
-    url = build_url(word, from, to)
+    url = build_url(word.value, from.value, to.value)
     response = Net::HTTP.get_response(url)
     doc = Nokogiri::HTML(response.body)
     results = doc.xpath("//div[@id='dict']/table/tr/td/ol/li").map(&:text)

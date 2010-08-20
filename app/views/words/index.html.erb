@@ -3,7 +3,7 @@
 <div class="box" id="words-index-box">
   <h1>My words</h1>
   <% if @words.empty? %>
-    <div class="notice">You haven't got any words yet.</div>
+    <div class="notice">No results found.</div>
   <% else %>
     <ul class="custom" id="my-words">
       <% @words.each do |word| %>

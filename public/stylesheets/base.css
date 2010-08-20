@@ -16,15 +16,14 @@ a {
   font-weight: bold;
 }
 
-input::-moz-focus-inner, input::-moz-focus-inner {
+input::-moz-focus-inner {
   border : 0px;
 }
 
 /*for IE8 */
-a, input:focus, input:focus {
+a, input:focus {
   outline : none;
 }
-
 
 a:hover {
   color: #3b73cf;
@@ -59,6 +58,37 @@ br {
 form div {
   position: relative;
   height: 75px;
+}
+
+.field_with_errors {
+  height: auto;
+}
+
+.error {
+  position: absolute;
+  top: 0;
+  right: 3px;
+  color: #9E0316;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.flash {
+  margin-left: 10px;
+  padding: 10px 10px 10px 37px;
+  font-size: 13px;
+  -moz-border-radius: 7px;
+  display: none;
+}
+
+.flash.flash-notice {
+  background: #93C2E6 url(../images/notice.png) no-repeat scroll 7px 7px;
+  border: 1px solid #216294;
+}
+
+.flash.flash-error {
+  background: #ff7979 url(../images/error.png) no-repeat scroll 7px 7px;
+  border: 1px solid #CC0000;
 }
 
 label {
@@ -172,6 +202,7 @@ select {
 
 #login-box {
   min-height: 150px;
+  padding: 35px;
 }
 
 #about-box {
@@ -205,6 +236,16 @@ select {
   clear: both;
 }
 
+.input-spinner {
+  position: absolute;
+  right: 15px;
+  top: 30px;
+}
+
+.button-spinner {
+  margin: 0 10px;
+}
+
 #word_lang {
   margin-right: 25px;
 }
@@ -214,7 +255,7 @@ select {
 }
 
 #word_submit {
-  margin-left: 30px;
+  margin-left: 25px;
   height: 40px;
   width: 135px;
 }
@@ -225,12 +266,23 @@ select {
 }
 
 #word_value {
-  width: 376px;
+  width: 370px;
 }
 
 #translate-form, #filter-form {
   margin: 0 auto;
-  width: 410px;
+}
+
+#translate-form {
+  width: 402px;
+}
+
+#filter-form {
+  width: 430px;
+}
+
+#filter-form .button-spinner {
+  margin: 10px 0 0 10px;
 }
 
 #save-button {

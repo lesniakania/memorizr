@@ -2,13 +2,12 @@ class Word
   include DataMapper::Resource
   include CommonProperties
 
-  property :value, String, :required => true, :length => 256
+  property :value, String, :required => true, :length => 256, :message => 'forgot to type a word?'
   property :lang_id, Integer, :required => true
 
   has n, :translations, :child_key => [:from_id]
   has n, :meanings, self, :through => :translations, :via => :to
 
-#  validates_presence_of :value, :lang_id
   validates_uniqueness_of :value, :scope => :lang_id
 
   belongs_to :lang
@@ -44,13 +43,13 @@ class Word
     words.select { |w| w.meanings.any? { |m| m.lang == to } }
   end
 
-  def self.extract_meanings(value, from, to)
-    lang_from = Lang.first(:value => from)
-    lang_to = Lang.first(:value => to)
-    word = Word.first(:value => value, :lang => lang_from) || Word.new(:value => value, :lang => lang_from)
+  def self.extract_meanings(word, from, to)
     if word.valid?
-      meanings = word && word.meanings.select { |m| m.lang == lang_to }.map(&:value) || []
-      meanings = Translator.extract_meanings(value, from, to) if meanings.empty?
+      meanings = word.meanings.select { |m| m.lang == to }.map(&:value) || []
+      if meanings.empty?
+        meanings = Translator.extract_meanings(word, from, to)
+        word.errors.add(:value, 'Oops, error, please try again.') unless meanings
+      end
       meanings
     else
       false

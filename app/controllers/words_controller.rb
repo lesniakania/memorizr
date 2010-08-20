@@ -2,10 +2,8 @@ class WordsController < ApplicationController
   before_filter :ensure_authenticated
 
   def index
-    from = params[:from] || Lang.default_from
-    to = params[:to] || Lang.default_to
-    @from = Lang.first(:value => from)
-    @to = Lang.first(:value => to)
+    @from = Lang.first(:value => params[:from] || Lang.default_from)
+    @to = Lang.first(:value => params[:to] || Lang.default_to)
     @available_langs = Lang.all.map { |l| [l.value, l.value] }
 
     @words = Word.extract_words(@from, @to, current_user)
@@ -17,26 +15,24 @@ class WordsController < ApplicationController
   end
 
   def translate
-    @word = params[:word][:value]
-    @from = params[:word][:lang]
-    @to = params[:word][:to]
+    @from = Lang.first(:value => params[:word][:lang])
+    @to = Lang.first(:value => params[:word][:to])
+    word_value = params[:word][:value]
+    @word = Word.first(:value => word_value, :lang => @from) || Word.new(:value => word_value, :lang => @from)
 
     if @results = Word.extract_meanings(@word, @from, @to)
       render :partial => 'results'
     else
-      @word = Word.new
       @available_langs = Lang.all.map { |l| [l.value, l.value] }
-      render :new, :status => :conflict
+      render :new, :layout => false, :status => :conflict
     end
   end
 
   def save
     if Word.save_with_meanings(current_user, params[:word], params[:from], params[:to], params[:meanings])
-      render :text => 'Translation successfully saved.'
+      render :text => 'Yeah, translation saved!'
     else
-      @word = Word.new
-      @available_langs = Lang.all.map { |l| [l.value, l.value] }
-      render :new, :status => 409
+      render :text => 'Oops, error, please try again.', :layout => false, :status => 409
     end
   end
 end

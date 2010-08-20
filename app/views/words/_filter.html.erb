@@ -3,9 +3,9 @@
 
   <%= form_tag words_path, :method => :get, :id => 'filter-form' do %>
     <div class="group buttons">
-      <%= select_tag :lang, options_for_select(@available_langs, :selected => Lang.default_from), :name => 'from', :id => 'word_lang' %>
+      <%= select_tag :lang, options_for_select(@available_langs, :selected => params[:from] || Lang.default_from), :name => 'from', :id => 'word_lang' %>
       <%= image_tag 'arrow.png', :id => 'arrow' %>
-      <%= select_tag :word_to, options_for_select(@available_langs, :selected => Lang.default_to), :name => 'to', :id => 'word_to' %>
+      <%= select_tag :word_to, options_for_select(@available_langs, :selected => params[:to] || Lang.default_to), :name => 'to', :id => 'word_to' %>
       <%= submit_tag 'Filter', :id => 'word_submit' %>
     </div>
   <% end %>
