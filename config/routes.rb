@@ -11,6 +11,13 @@ Memorizr::Application.routes.draw do
       get :logout
     end
   end
+
+  resources :settings do
+    collection do
+      get :edit_password
+      put :update_password
+    end
+  end
   
   root :to => "words#index"
 end

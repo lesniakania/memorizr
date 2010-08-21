@@ -11,6 +11,11 @@
         <%= render :partial => '/layouts/right_menu' %>
       </div>
       <div id="content">
+        <% if flash[:notice] %>
+          <div class="flash flash-notice" id="flash"><%= flash[:notice] %></div>
+        <% elsif flash[:error] %>
+          <div class="flash flash-error" id="flash"><%= flash[:error] %></div>
+        <% end %>
         <%= yield %>
       </div>
     </div>

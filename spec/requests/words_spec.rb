@@ -119,12 +119,12 @@ describe WordsController do
     it "should show login form" do
       [words_path, new_word_path].each do |path|
         get(path)
-        response.should redirect_to(new_session_path)
+        response.should be_forbidden
       end
 
       [translate_words_path, save_words_path].each do |path|
         post(path)
-        response.should redirect_to(new_session_path)
+        response.should be_forbidden
       end
     end
   end

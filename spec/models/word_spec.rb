@@ -97,19 +97,21 @@ describe Word do
 
     it "should retrieve meanings from database when they are there" do
       Translator.expects(:extract_meanings).times(0)
-      Set.new(Word.extract_meanings(@word.value, @en.value, @pl.value)).should == Set.new(@meanings[1..-1].map(&:value))
+      Set.new(Word.extract_meanings(@word, @en, @pl)).should == Set.new(@meanings[1..-1].map(&:value))
     end
 
     it "should retrieve meanings from google when they are not in database" do
-      value = @word.value
+      word = Factory.build(:word, :value => @word.value, :lang => @word.lang)
       @word.destroy
       Translator.expects(:extract_meanings).times(1).returns([])
-      Word.extract_meanings(value, @en.value, @pl.value).should be_true
+      Word.extract_meanings(word, @en, @pl).should be_true
     end
 
     it "should not request google if invalid word given" do
       Translator.expects(:extract_meanings).times(0).returns([])
-      Word.extract_meanings("", @en.value, @pl.value).should be_false
+      word = Factory.build(:word)
+      word.value = nil
+      Word.extract_meanings(word, @en, @pl).should be_false
     end
   end
 end

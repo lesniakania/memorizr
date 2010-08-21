@@ -7,7 +7,11 @@ class User
   property :password, String, :length => 256
   property :encrypted_password, String, :required => true, :length => 256
 
+  attr_accessor :clear_text_password
+  attr_accessor :password_confirmation
+
   validates_presence_of :email, :password
+  validates_confirmation_of :clear_text_password, :confirm => :password_confirmation, :message => "Confirmation doesn't match"
 
   has n, :words, :through => :user_words
 
