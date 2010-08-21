@@ -4,11 +4,9 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
-  unless ActionController::Base.consider_all_requests_local
-    rescue_from ActionController::RoutingError, :with => :not_found
-    rescue_from RuntimeError, :with => :render_error
-  end
-  
+  rescue_from Exception, :with => :render_error
+  rescue_from ActionController::RoutingError, :with => :not_found
+
   private
 
   def current_user
