@@ -376,3 +376,18 @@ ul.custom dd {
 #edit-password-form {
   width: 354px;
 }
+
+#my-words dt {
+  width: 500px;
+}
+
+#my-words dl {
+  position: relative;
+}
+
+.delete-word-link {
+  position: absolute;
+  right: 10px;
+  top: 0;
+}
+

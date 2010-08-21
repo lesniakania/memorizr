@@ -7,11 +7,12 @@
   <% else %>
     <ul class="custom" id="my-words">
       <% @words.each do |word| %>
-        <li>
+        <li id="word-<%= word.id %>">
           <dl>
             <dt>
               <%= word.value %>
             </dt>
+            <%= link_to 'delete', word_path(word), :class => 'delete-word-link' %>
             <dd>
               <ol>
                 <% word.meanings_to(@to).each do |meaning|  %>

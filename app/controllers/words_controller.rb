@@ -28,6 +28,16 @@ class WordsController < ApplicationController
     end
   end
 
+  def destroy
+    word_id = params[:id]
+    @user_word = UserWord.first(:word_id => word_id, :user_id => current_user.id)
+    if @user_word.destroy
+      render :text => word_id
+    else
+      render :text => "Oops, error while destroying.", :status => :conflict
+    end
+  end
+
   def save
     if Word.save_with_meanings(current_user, params[:word], params[:from], params[:to], params[:meanings])
       render :text => 'Yeah, translation saved!'

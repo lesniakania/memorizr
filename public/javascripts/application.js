@@ -3,6 +3,7 @@ var Application = function() {
   this.initTranslate();
   this.initSave();
   this.initWordsList();
+  this.initDeleteWord();
 };
 
 Application.prototype = {
@@ -108,11 +109,36 @@ Application.prototype = {
   },
 
   initWordsList: function() {
-    $('ul.custom li').toggle(function() {
-      $(this).find('dd').slideDown();
+    $('ul.custom dt').toggle(function() {
+      $(this).parents('li').find('dd').slideDown();
     }, function() {
-      $(this).find('dd').slideUp();
+      $(this).parents('li').find('dd').slideUp();
     });
+  },
+
+  initDeleteWord: function() {
+    $('.delete-word-link').click($.proxy(this.onDeleteWord, this));
+  },
+
+  onDeleteWord: function(e) {
+    var link = $(e.currentTarget);
+
+    $.ajax({
+      url: link.attr('href'),
+      type: 'DELETE',
+      success: $.proxy(this.onDeleteWordSuccess, this)
+    });
+
+    return false;
+  },
+
+  onDeleteWordSuccess: function(id, status, xhr) {
+    $('li#word-' + id).remove();
+    if (!$('#my-words').children().size() > 0) {
+      var div = $('<div />')
+      div.text('No results found.')
+      $('#my-words').replaceWith(div);
+    }
   }
 
 };

@@ -113,6 +113,19 @@ describe WordsController do
         response.status.should == 409
       end
     end
+
+    describe "destroy" do
+      it "should destroy user word successfully" do
+        word = Factory.create(:word)
+        @user.words << word
+        @user.save
+        
+        delete(word_path(word))
+        response.should be_successful
+        @user.reload.words.first(:value => word.value).should be_nil
+        Word.first(:value => word.value, :lang => word.lang).should_not be_nil
+      end
+    end
   end
 
   context "not logged in user" do
