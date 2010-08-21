@@ -346,3 +346,15 @@ ul.custom dd {
 #translation li {
   cursor: default;
 }
+
+#exception-box {
+  text-align: center;
+}
+
+#exception-box img {
+  border: 1px solid #002D77;
+}
+
+.exception-message {
+  margin: 10px 0 0;
+}

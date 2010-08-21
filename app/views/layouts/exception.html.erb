@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Memorizr</title>
+    <%= stylesheet_link_tag :all %>
+    <%= csrf_meta_tag %>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="header">
+        <%= render :partial => 'layouts/logo' %>
+      </div>
+      <div id="content">
+        <div class="box" id="exception-box">
+          <h1>Oops, something wrong happened</h1>
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

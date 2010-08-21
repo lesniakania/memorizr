@@ -125,6 +125,8 @@ GEM
     treetop (1.4.8)
       polyglot (>= 0.3.1)
     tzinfo (0.3.23)
+    vidibus-routing_error (0.1.4)
+      rails (>= 3.0.0.rc)
     webrat (0.7.1)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -148,3 +150,4 @@ DEPENDENCIES
   rspec (= 2.0.0.beta.18)
   rspec-rails (= 2.0.0.beta.18)
   ruby_core_source
+  vidibus-routing_error
