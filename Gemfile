@@ -5,7 +5,7 @@ gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 
 gem 'nokogiri'
 
-gem 'dm-sqlite-adapter'
+gem 'dm-postgres-adapter'
 gem 'dm-rails'
 gem 'dm-core'
 gem 'dm-validations'

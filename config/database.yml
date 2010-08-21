@@ -1,17 +1,17 @@
 development: &defaults
-  adapter:  sqlite
-  database: db/memorizr_dev.sqlite3
-  username: root
+  adapter:  postgres
+  database: memorizr_dev
+  username: postgres
   password:
   host: localhost
 
 test:
   <<:       *defaults
-  database: db/memorizr_test.sqlite3
+  database: memorizr_test
 
 production:
   <<:       *defaults
-  database: db/memorizr_production.sqlite3
+  database: memorizr_production
 
 rake:
   <<: *defaults
