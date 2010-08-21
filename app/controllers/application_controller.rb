@@ -4,9 +4,10 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
-  rescue_from Exception, :with => :render_error
-  rescue_from ActionController::RoutingError, :with => :not_found
-
+  unless ActionController::Base.consider_all_requests_local
+    rescue_from Exception, :with => :render_error
+    rescue_from ActionController::RoutingError, :with => :not_found
+  end
   private
 
   def current_user

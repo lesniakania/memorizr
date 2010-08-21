@@ -73,6 +73,15 @@ form div {
   font-weight: bold;
 }
 
+#session-error {
+  position: static;
+  margin: 0 5px;
+}
+
+#new_session_form {
+  width: 292px;
+}
+
 .flash {
   margin-left: 10px;
   padding: 10px 10px 10px 37px;

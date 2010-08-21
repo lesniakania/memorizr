@@ -13,7 +13,7 @@
   </div>
   <div id="form-box">
     <%= form_for @session_form, :url => '/session' do |f| %>
-      <%= error_on @session_form, :session %>
+      <%= error_on @session_form, :session, :id => 'session-error' %>
 
       <div>
         <%= f.label :email %>
