@@ -16,6 +16,7 @@ class User
   has n, :words, :through => :user_words
 
   validates_format_of :email, :with => Regexp::EMAIL
+  validates_uniqueness_of :email
   validates_length_of :password, :min => 3, :max => 256
 
   def reload

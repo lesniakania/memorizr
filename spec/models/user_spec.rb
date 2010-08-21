@@ -24,6 +24,12 @@ describe User do
       @user.password = nil
       @user.should_not be_valid
     end
+
+    it "should not be valid with email not unique" do
+      @user.save
+      user = Factory.build(:user, :email => @user.email)
+      user.should_not be_valid
+    end
   end
 
   describe "instance methods" do
