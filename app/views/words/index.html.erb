@@ -12,7 +12,6 @@
             <dt>
               <%= word.value %>
             </dt>
-            <%= link_to 'delete', word_path(word), :class => 'delete-word-link' %>
             <dd>
               <ol>
                 <% word.meanings_to(@to).each do |meaning|  %>
@@ -21,6 +20,7 @@
               </ol>
             </dd>
           </dl>
+          <%= link_to 'delete', word_path(word), :class => 'delete-word-link' %>
         </li>
       <% end %>
     </ul>

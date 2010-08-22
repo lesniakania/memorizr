@@ -377,12 +377,18 @@ ul.custom dd {
   width: 354px;
 }
 
+#my-words li {
+  position: relative;
+  padding: 0;
+}
+
 #my-words dt {
   width: 500px;
 }
 
 #my-words dl {
-  position: relative;
+  padding-left: 30px;
+  width: 415px;
 }
 
 .delete-word-link {

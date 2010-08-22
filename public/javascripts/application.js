@@ -117,7 +117,7 @@ Application.prototype = {
   },
 
   initWordsList: function() {
-    $('ul.custom dt').toggle(function() {
+    $('ul.custom dl').toggle(function() {
       $(this).parents('li').find('dd').slideDown();
     }, function() {
       $(this).parents('li').find('dd').slideUp();
