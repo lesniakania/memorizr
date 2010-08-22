@@ -41,4 +41,14 @@ namespace :memorizr do
     end
   end
 
+  desc "Fix"
+  task :fix => :environment do |t, args|
+    en = Lang.first(:value => 'en')
+    pl = Lang.first(:value => 'pl')
+    Translation.all.each do |t|
+      t.from.update(:lang => en)
+      t.to.update(:lang => pl)
+    end
+  end
+
 end
