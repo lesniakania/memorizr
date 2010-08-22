@@ -50,6 +50,7 @@ Application.prototype = {
       resultsDiv.replaceWith(results);
     } else {
       $('#translate-box').after(results);
+      $.scrollTo('#results');
     }
 
     this.translateSpinner.stop();
