@@ -28,4 +28,14 @@ namespace :memorizr do
       p user.errors.to_a
     end
   end
+
+  desc "Create language"
+  task :create_lang, [:value] => :environment do |t, args|
+    lang = Lang.create(:value => args.value)
+    if lang.valid?
+      puts "Lang with value '#{args.value}' has been successfully created."
+    else
+      p lang.errors.to_a
+    end
+  end
 end
