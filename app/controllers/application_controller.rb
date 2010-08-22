@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   def ensure_authenticated
     unless current_user
       @session_form = SessionForm.new
-      render '/sessions/new', :status => :forbidden
+      render '/sessions/new', :layout => 'anonymous', :status => :forbidden
     end
   end
 
