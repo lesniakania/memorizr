@@ -20,4 +20,8 @@ class Lang
   def self.defaults
     DEFAULTS.values
   end
+
+  def self.available_langs
+    all(:order => [:value]).map { |l| [l.value, l.value] }
+  end
 end

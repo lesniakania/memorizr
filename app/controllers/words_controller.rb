@@ -4,14 +4,14 @@ class WordsController < ApplicationController
   def index
     @from = Lang.first(:value => params[:from] || Lang.default_from)
     @to = Lang.first(:value => params[:to] || Lang.default_to)
-    @available_langs = Lang.all.map { |l| [l.value, l.value] }
+    @available_langs = Lang.available_langs
 
     @words = Word.extract_words(@from, @to, current_user)
   end
 
   def new
     @word = Word.new
-    @available_langs = Lang.all.map { |l| [l.value, l.value] }
+    @available_langs = Lang.available_langs
   end
 
   def translate
@@ -23,7 +23,7 @@ class WordsController < ApplicationController
     if @results = Word.extract_meanings(@word, @from, @to)
       render :partial => 'results'
     else
-      @available_langs = Lang.all.map { |l| [l.value, l.value] }
+      @available_langs = Lang.available_langs
       render :new, :layout => false, :status => :conflict
     end
   end

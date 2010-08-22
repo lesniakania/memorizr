@@ -1,7 +1,9 @@
 namespace :memorizr do
+
   desc "Setup application"
   task :setup => :environment do
-    ['en', 'pl'].each { |value| Lang.create(:value => value) }
+    Lang.destroy
+    ['en', 'pl', 'cs', 'fr', 'es', 'pt', 'ru', 'sk', 'uk', 'hu', 'it'].each { |value| Lang.create(:value => value) }
   end
 
   desc "Clear whole database"
@@ -38,4 +40,5 @@ namespace :memorizr do
       p lang.errors.to_a
     end
   end
+
 end
