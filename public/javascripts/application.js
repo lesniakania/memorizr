@@ -19,8 +19,14 @@ Application.prototype = {
   },
   
   initTranslate: function() {
+    $('#word_value').live('click', $.proxy(this.onWordInputClick, this));
     $('#translate-form').submit($.proxy(this.onTranslate, this));
     this.translateSpinner = new InputSpinner($('#word_value'));
+  },
+
+  onWordInputClick: function(e) {
+    var input = $(e.currentTarget);
+    input.val('');
   },
 
   onTranslate: function(e) {
