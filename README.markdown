@@ -1,6 +1,7 @@
-## memorizr is tool for translate and mark down words
+# memorizr
+is tool for translate and mark down words
 
-# Run
+## Install
  * gem install bundler --pre
  * bundle install
 
