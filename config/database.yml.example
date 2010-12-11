@@ -1,0 +1,11 @@
+development: &defaults
+  adapter: postgres
+  database: memorizr_dev
+  username: postgres
+  password:
+  host: localhost
+
+test:
+  <<: *defaults
+  database: memorizr_test
+
