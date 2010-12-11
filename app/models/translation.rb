@@ -8,4 +8,5 @@ class Translation
   belongs_to :to, Word
 
   validates_presence_of :from_id, :to_id
+  validates_uniqueness_of :from_id, :scope => :to_id
 end
