@@ -43,4 +43,9 @@ class User
       clear_password
     end
   end
+
+  def words_by_languages(from, to)
+    self.words(:lang => from, :order => [:value]).
+      select { |w| w.meanings.any? { |m| m.lang == to } }
+  end
 end

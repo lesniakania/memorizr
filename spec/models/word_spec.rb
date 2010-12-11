@@ -72,7 +72,7 @@ describe Word do
     end
 
     it "should retrieve words translated from a specific language to a specific language" do
-      Set.new(Word.extract_words(@en, @pl, @user)).should == Set.new([@word])
+      Set.new(@user.words_by_languages(@en, @pl)).should == Set.new([@word])
     end
 
     it "retieved words should be sorted by value" do
@@ -88,7 +88,7 @@ describe Word do
       words.each { |word| @user.words << word }
       @user.save
 
-      Word.extract_words(@en, @pl, @user).map(&:value).should == ['a-word', 'b-word', 'c-word']
+      @user.words_by_languages(@en, @pl).map(&:value).should == ['a-word', 'b-word', 'c-word']
     end
 
     it "should retrieve meanings for a specific language" do
@@ -97,21 +97,55 @@ describe Word do
 
     it "should retrieve meanings from database when they are there" do
       Translator.expects(:extract_meanings).times(0)
-      Set.new(Word.extract_meanings(@word, @en, @pl)).should == Set.new(@meanings[1..-1].map(&:value))
+      Set.new(@word.extract_meanings(@en, @pl)).should == Set.new(@meanings[1..-1])
     end
 
     it "should retrieve meanings from google when they are not in database" do
       word = Factory.build(:word, :value => @word.value, :lang => @word.lang)
       @word.destroy
       Translator.expects(:extract_meanings).times(1).returns([])
-      Word.extract_meanings(word, @en, @pl).should be_true
+      @word.extract_meanings(@en, @pl).should be_true
     end
 
     it "should not request google if invalid word given" do
       Translator.expects(:extract_meanings).times(0).returns([])
       word = Factory.build(:word)
       word.value = nil
-      Word.extract_meanings(word, @en, @pl).should be_false
+      word.extract_meanings(@en, @pl).should be_false
+    end
+  end
+
+  describe "hash format" do
+    before(:each) do
+      @word = Factory.build(:word, :lang => @en)
+      @meanings = {
+        :en => Factory.create(:word, :lang => @en),
+        :pl => Factory.create(:word, :lang => @pl)
+      }
+      @word.meanings += @meanings.values
+      @word.save
+
+      @user = Factory.build(:user)
+      @user.words += [@word] + @meanings.values
+      @user.save
+    end
+
+    it "should not include meanings if include_meanings_to is not passed" do
+      hash = @word.hash_format
+      hash[:id].should == @word.id
+      hash[:value].should == @word.value
+      hash.should_not include(:meanings)
+    end
+
+    it "should include meanings if include_meanings_to is passed" do
+      hash = @word.hash_format(@pl)
+      hash[:id].should == @word.id
+      hash[:value].should == @word.value
+      hash[:lang_id].should == @word.lang_id
+      hash.should include(:meanings)
+      hash[:meanings].first[:id].should == @meanings[:pl].id
+      hash[:meanings].first[:value].should == @meanings[:pl].value
+      hash[:meanings].first[:lang_id].should == @meanings[:pl].lang_id
     end
   end
 end

@@ -16,11 +16,11 @@ class Word
     lang_from = Lang.first(:value => from)
     lang_to = Lang.first(:value => to)
     word = Word.first(:value => value, :lang => lang_from) || Word.new(:value => value, :lang => lang_from)
-    words = meanings.map { |m| Word.first(:value => m, :lang => lang_to) || Word.new(:value => m, :lang => lang_to) }
-
+    words = Word.build_meanings(meanings, lang_to)
+    
     if word.valid? && words.all?(&:valid?)
       word.save
-      words = meanings.map { |m| Word.first(:value => m, :lang => lang_to) || Word.new(:value => m, :lang => lang_to) }
+      words = Word.build_meanings(meanings, lang_to)
       user.words << word
       words.each do |meaning|
         meaning.save
@@ -34,25 +34,36 @@ class Word
     end
   end
 
-  def meanings_to(lang)
-    meanings.all(:lang => lang)
+  def self.build_meanings(meanings, to)
+    meanings.map { |m| Word.first(:value => m, :lang => to) || Word.new(:value => m, :lang => to) }
   end
 
-  def self.extract_words(from, to, user)
-    words = user && user.words(:lang => from, :order => [:value])
-    words.select { |w| w.meanings.any? { |m| m.lang == to } }
-  end
-
-  def self.extract_meanings(word, from, to)
-    if word.valid?
-      meanings = word.meanings.select { |m| m.lang == to }.map(&:value) || []
+  def extract_meanings(from, to)
+    if valid?
+      meanings = meanings_to(to) || []
       if meanings.empty?
-        meanings = Translator.extract_meanings(word, from, to)
-        word.errors.add(:value, 'Oops, error, please try again.') unless meanings
+        meanings = Translator.extract_meanings(self, from, to)
+        if meanings
+          meanings = Word.build_meanings(meanings, to)
+        else
+          errors.add(:value, 'Oops, error, please try again.')
+        end
       end
       meanings
     else
       false
     end
+  end
+
+  def meanings_to(lang)
+    meanings.all(:lang => lang)
+  end
+
+  def hash_format(include_meanings_to = nil)
+    hash = { :id => id, :value => value, :lang_id => lang_id }
+    if include_meanings_to
+      hash.merge!({ :meanings => meanings_to(include_meanings_to).map(&:hash_format) })
+    end
+    hash
   end
 end

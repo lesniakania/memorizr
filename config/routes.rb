@@ -18,6 +18,8 @@ Memorizr::Application.routes.draw do
       put :update_password
     end
   end
+
+  resources :langs
   
   root :to => "words#index"
 end

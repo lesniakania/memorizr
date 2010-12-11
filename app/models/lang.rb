@@ -24,4 +24,16 @@ class Lang
   def self.available_langs
     all(:order => [:value]).map { |l| [l.value, l.value] }
   end
+
+  def hash_format
+    { :id => id, :value => value }
+  end
+
+  def self.index_hash
+    {
+      :available => all(:order => [:value]).map(&:hash_format),
+      :default_from => Lang.default_from,
+      :default_to => Lang.default_to
+    }
+  end
 end
