@@ -13,7 +13,7 @@ gem 'dm-migrations'
 
 group :development do
   gem 'ruby_core_source', :require => 'ruby_core_source'
-  gem 'ruby-debug19'
+  gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
 group :test do
