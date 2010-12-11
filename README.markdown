@@ -9,3 +9,7 @@ is tool for translate and mark down words
  * copy config/database.yml.example to config/database.yml
  * modify it to fit to your database
 
+## Run
+ * bundle exec rails server
+
+
