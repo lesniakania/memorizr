@@ -1,15 +1,20 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.0.rc'
-gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
+group :production do
+  gem 'rails', '3.0.0.rc'
+  gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 
-gem 'nokogiri'
+  gem 'nokogiri'
 
-gem 'dm-postgres-adapter'
-gem 'dm-rails'
-gem 'dm-core'
-gem 'dm-validations'
-gem 'dm-migrations'
+  gem 'dm-postgres-adapter'
+  gem 'dm-rails'
+  gem 'dm-core'
+  gem 'dm-validations'
+  gem 'dm-migrations'
+
+  gem 'vidibus-routing_error'
+  gem 'heroku'
+end
 
 group :development, :test do
   gem 'ruby_core_source', :require => 'ruby_core_source'
@@ -20,5 +25,3 @@ group :development, :test do
   gem "factory_girl_rails", "1.0"
 end
 
-gem 'vidibus-routing_error'
-gem 'heroku'
