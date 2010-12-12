@@ -11,12 +11,9 @@ gem 'dm-core'
 gem 'dm-validations'
 gem 'dm-migrations'
 
-group :development do
+group :development, :test do
   gem 'ruby_core_source', :require => 'ruby_core_source'
   gem 'ruby-debug19', :require => 'ruby-debug'
-end
-
-group :test do
   gem "rspec", '2.0.0.beta.18'
   gem "rspec-rails", '2.0.0.beta.18'
   gem 'mocha'
