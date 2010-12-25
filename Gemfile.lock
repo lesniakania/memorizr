@@ -157,7 +157,7 @@ DEPENDENCIES
   heroku
   mocha
   nokogiri
-  rails (= 3.0.0.rc)
+  rails
   rspec (= 2.0.0.beta.18)
   rspec-rails (= 2.0.0.beta.18)
   ruby-debug19
