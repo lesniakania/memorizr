@@ -10,19 +10,19 @@ class Lang
   DEFAULTS = { :from => 'en', :to => 'pl' }
 
   def self.default_from
-    DEFAULTS[:from]
+    Lang.first(:value => DEFAULTS[:from])
   end
 
   def self.default_to
-    DEFAULTS[:to]
+    Lang.first(:value => DEFAULTS[:to])
   end
 
-  def self.defaults
+  def self.default_values
     DEFAULTS.values
   end
 
   def self.available_langs
-    all(:order => [:value]).map { |l| [l.value, l.value] }
+    all(:order => [:value]).map { |l| [l.value, l.id] }
   end
 
   def hash_format
@@ -32,8 +32,8 @@ class Lang
   def self.index_hash
     {
       :available => all(:order => [:value]).map(&:hash_format),
-      :default_from => Lang.default_from,
-      :default_to => Lang.default_to
+      :default_from => Lang.default_from.id,
+      :default_to => Lang.default_to.id
     }
   end
 end

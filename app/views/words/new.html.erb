@@ -8,9 +8,9 @@
       <%= error_on(@word, :value) %>
     </div>
     <div class="group buttons">
-      <%= f.select :lang, @available_langs, :selected => Lang.default_from %>
+      <%= f.select :lang, @available_langs, :selected => Lang.default_from.id %>
       <%= image_tag 'arrow.png', :id => 'arrow' %>
-      <%= select_tag :word_to, options_for_select(@available_langs, :selected => Lang.default_to), :name => 'word[to]' %>
+      <%= select_tag :word_to, options_for_select(@available_langs, :selected => Lang.default_to.id), :name => 'word[to]' %>
       <%= f.submit 'Translate' %>
     </div>
   <% end %>

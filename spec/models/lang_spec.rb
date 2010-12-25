@@ -24,11 +24,11 @@ describe Lang do
 
   describe "defaults" do
     it "default 'from language' should be English" do
-      Lang.default_from.should == 'en'
+      Lang.default_from.value.should == 'en'
     end
 
     it "default 'to language' should be English" do
-      Lang.default_to.should == 'pl'
+      Lang.default_to.value.should == 'pl'
     end
   end
 end

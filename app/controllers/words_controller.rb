@@ -2,8 +2,8 @@ class WordsController < ApplicationController
   before_filter :ensure_authenticated
 
   def index
-    @from = Lang.first(:value => params[:from] || Lang.default_from)
-    @to = Lang.first(:value => params[:to] || Lang.default_to)
+    @from = Lang.get(params[:from]) || Lang.default_from
+    @to = Lang.get(params[:to]) || Lang.default_to
     @available_langs = Lang.available_langs
 
     @words = current_user.words_by_languages(@from, @to)
@@ -20,8 +20,8 @@ class WordsController < ApplicationController
   end
 
   def translate
-    @from = Lang.first(:value => params[:word][:lang])
-    @to = Lang.first(:value => params[:word][:to])
+    @from = Lang.get(params[:word][:lang])
+    @to = Lang.get(params[:word][:to])
     word_value = params[:word][:value]
     @word = Word.first(:value => word_value, :lang => @from) || Word.new(:value => word_value, :lang => @from)
 

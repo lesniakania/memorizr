@@ -19,5 +19,5 @@ Factory.define :translation do |u|
 end
 
 def create_default_langs
-  Lang.defaults.each { |l| Factory.create(:lang, :value => l) }
+  Lang.default_values.each { |l| Factory.create(:lang, :value => l) }
 end

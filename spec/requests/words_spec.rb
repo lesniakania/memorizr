@@ -73,8 +73,8 @@ describe WordsController do
           @params = {
             :word => {
               :value => 'word',
-              :lang => 'en',
-              :to => 'pl'
+              :lang => @en.id,
+              :to => @pl.id
             }
           }
         end
