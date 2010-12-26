@@ -19,7 +19,24 @@ Memorizr::Application.routes.draw do
     end
   end
 
-  resources :langs
+  namespace :api do
+    scope '/v1'do
+      resources :langs, :only => [:index]
+
+      resources :words do
+        collection do
+          post :translate
+          post :save
+        end
+      end
+
+      resource :session do
+        member do
+          get :logout
+        end
+      end
+    end
+  end
   
   root :to => "words#index"
 end

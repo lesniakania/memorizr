@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class SessionsController < BaseController
   layout 'anonymous'
 
   def new

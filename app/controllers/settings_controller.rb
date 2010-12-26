@@ -1,4 +1,4 @@
-class SettingsController < ApplicationController
+class SettingsController < BaseController
   before_filter :ensure_authenticated
   before_filter :load_user
 

@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
-  layout 'application'
 
   helper_method :current_user
 
@@ -13,13 +11,6 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= User.get(session[:user_id])
-  end
-
-  def ensure_authenticated
-    unless current_user
-      @session_form = SessionForm.new
-      render '/sessions/new', :layout => 'anonymous', :status => :forbidden
-    end
   end
 
   def render_error

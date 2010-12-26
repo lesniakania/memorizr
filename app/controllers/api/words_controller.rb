@@ -1,4 +1,4 @@
-class WordsController < BaseController
+class Api::WordsController < Api::BaseController
   before_filter :ensure_authenticated
 
   def index
@@ -8,12 +8,7 @@ class WordsController < BaseController
 
     @words = current_user.words_by_languages(@from, @to)
 
-    render
-  end
-
-  def new
-    @word = Word.new
-    @available_langs = Lang.available_langs
+    render :json => @words.map { |w| w.hash_format(@to) }
   end
 
   def translate
@@ -23,28 +18,26 @@ class WordsController < BaseController
     @word = Word.first(:value => word_value, :lang => @from) || Word.new(:value => word_value, :lang => @from)
 
     if @results = @word.extract_meanings(@from, @to)
-      render :partial => 'results'
+      render :json => @results.map(&:hash_format)
     else
-      @available_langs = Lang.available_langs
-      render :new, :layout => false, :status => :conflict
+      head :conflict
     end
   end
 
   def destroy
-    word_id = params[:id]
-    @user_word = UserWord.first(:word_id => word_id, :user_id => current_user.id)
+    @user_word = UserWord.first(:word_id => params[:id], :user_id => current_user.id)
     if @user_word.destroy
-      render :text => word_id
+      head :ok
     else
-      render :text => "Oops, error while destroying.", :status => :conflict
+      head :conflict
     end
   end
 
   def save
     if Word.save_with_meanings(current_user, params[:word], params[:from], params[:to], params[:meanings])
-      render :text => 'Yeah, translation saved!'
+      head :ok
     else
-      render :text => 'Oops, error, please try again.', :layout => false, :status => :conflict
+      head :conflict
     end
   end
 end

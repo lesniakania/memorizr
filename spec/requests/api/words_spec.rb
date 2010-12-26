@@ -1,31 +1,39 @@
 require 'spec_helper'
 
-describe WordsController do
+describe Api::WordsController do
   context "logged in user" do
     before(:each) do
       @user = Factory.create(:user)
-      login(@user, WordsController)
+      login(@user, Api::WordsController)
     end
-
+    
     describe "index" do
       before(:each) do
-        @user.expects(:words_by_languages).returns([])
+        @word = Factory.create(:word)
+        @meaning = Factory.create(:word, :lang => Lang.default_to)
+        @word.meanings << @meaning
+        @word.save
+
+        @user.expects(:words_by_languages).returns([@word])
       end
 
       it "should show only current users words" do
-        get(words_path)
+        get(api_words_path)
         response.should be_successful
+        word = JSON.parse(response.body).first
+        Set.new(word.keys).should == Set.new(['id', 'value', 'lang_id', 'meanings'])
+        word['id'].should == @word.id
+        word['value'].should == @word.value
+        word['lang_id'].should == @word.lang_id
+        meaning = word['meanings'].first
+        Set.new(meaning.keys).should == Set.new(['id', 'value', 'lang_id'])
+        meaning['id'].should == @meaning.id
+        meaning['value'].should == @meaning.value
+        meaning['lang_id'].should == @meaning.lang_id
       end
 
       it "should be able to filter words" do
-        get(words_path, { :from => @en.id, :to => @pl.id })
-        response.should be_successful
-      end
-    end
-
-    describe "new" do
-      it "should render translate form properly" do
-        get(new_word_path)
+        get(api_words_path, { :from => @en.id, :to => @pl.id })
         response.should be_successful
       end
     end
@@ -42,16 +50,24 @@ describe WordsController do
       end
 
       it "should render results properly" do
-        @meanings = (1..2).map { |m| Factory.create(:word, :lang => @pl) }
+        @meaning = Factory.create(:word, :lang => @pl)
+        @meanings = [@meaning]
         Word.any_instance.stubs(:extract_meanings).returns(@meanings)
-        post(translate_words_path, @params)
+
+        post(translate_api_words_path, @params)
         response.should be_successful
-        @meanings.each { |m| response.body.should include(m.value.to_s) }
+
+        results = JSON.parse(response.body)
+        meaning = results.first
+        Set.new(meaning.keys).should == Set.new(['id', 'value', 'lang_id'])
+        meaning['id'].should == @meaning.id
+        meaning['value'].should == @meaning.value
+        meaning['lang_id'].should == @meaning.lang_id
       end
 
       it "should render translate form if any error appears during translation" do
         Net::HTTP.stubs(:get_response).raises('error')
-        post(translate_words_path, @params)
+        post(translate_api_words_path, @params)
         response.status.should == 409
       end
     end
@@ -68,13 +84,13 @@ describe WordsController do
       end
 
       it "should save words with meanings when valid data given" do
-        post(save_words_path, @params)
+        post(save_api_words_path, @params)
         response.should be_successful
       end
 
       it "should render translate form when invalid data given" do
         @params[:word] = nil
-        post(save_words_path, @params)
+        post(save_api_words_path, @params)
         response.status.should == 409
       end
     end
@@ -87,7 +103,7 @@ describe WordsController do
       end
 
       it "should destroy user word successfully" do
-        delete(word_path(@word))
+        delete(api_word_path(@word))
         response.should be_successful
         @user.reload.words.first(:value => @word.value).should be_nil
         Word.first(:value => @word.value, :lang => @word.lang).should_not be_nil
@@ -95,7 +111,7 @@ describe WordsController do
 
       it "should handle error properly" do
         UserWord.any_instance.stubs(:destroy).returns(false)
-        delete(word_path(@word))
+        delete(api_word_path(@word))
         response.status.should == 409
       end
     end
@@ -103,14 +119,12 @@ describe WordsController do
 
   context "not logged in user" do
     it "should show login form" do
-      [words_path, new_word_path].each do |path|
-        get(path)
-        response.should be_forbidden
-      end
+      get(api_words_path)
+      response.status.should == 401
 
-      [translate_words_path, save_words_path].each do |path|
+      [translate_api_words_path, save_api_words_path].each do |path|
         post(path)
-        response.should be_forbidden
+        response.status.should == 401
       end
     end
   end

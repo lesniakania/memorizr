@@ -48,4 +48,8 @@ class User
     self.words(:lang => from, :order => [:value]).
       select { |w| w.meanings.any? { |m| m.lang == to } }
   end
+
+  def json_hash
+    { :id => id }
+  end
 end
