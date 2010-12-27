@@ -1,7 +1,7 @@
 class Api::SessionsController < Api::BaseController  
   def create
     if basic_authenticate!
-      render :json => current_user.json_hash
+      render :json => current_user.hash_format
     else
       head :conflict
     end

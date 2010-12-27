@@ -49,7 +49,7 @@ class User
       select { |w| w.meanings.any? { |m| m.lang == to } }
   end
 
-  def json_hash
+  def hash_format
     { :id => id }
   end
 end
