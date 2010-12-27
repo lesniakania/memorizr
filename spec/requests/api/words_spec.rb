@@ -86,6 +86,8 @@ describe Api::WordsController do
       it "should save words with meanings when valid data given" do
         post(save_api_words_path, @params)
         response.should be_successful
+        word = JSON.parse(response.body)
+        word['id'].should_not be_nil
       end
 
       it "should render translate form when invalid data given" do

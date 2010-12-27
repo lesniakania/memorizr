@@ -29,6 +29,7 @@ class Word
       end
       user.save
       word.save
+      word
     else
       false
     end

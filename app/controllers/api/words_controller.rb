@@ -34,8 +34,8 @@ class Api::WordsController < Api::BaseController
   end
 
   def save
-    if Word.save_with_meanings(current_user, params[:word], params[:from_id], params[:to_id], params[:meanings])
-      head :ok
+    if word = Word.save_with_meanings(current_user, params[:word], params[:from_id], params[:to_id], params[:meanings])
+      render :json => word.hash_format
     else
       head :conflict
     end
