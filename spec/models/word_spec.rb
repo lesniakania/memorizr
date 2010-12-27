@@ -35,7 +35,7 @@ describe Word do
     end
 
     it "should save word with its meanings properly" do
-      Word.save_with_meanings(@user, @word, @en.value, @pl.value, @meanings)
+      Word.save_with_meanings(@user, @word, @en.id, @pl.id, @meanings)
       word = Word.first(:value => @word)
       word.should_not be_nil
       Set.new(@user.reload.words.map(&:value)).should == Set.new(@meanings + [@word])
@@ -43,18 +43,18 @@ describe Word do
     end
 
     it "should return false if invalid data given" do
-      Word.save_with_meanings(@user, @word, @en.value, nil, @meanings)
+      Word.save_with_meanings(@user, @word, @en.id, nil, @meanings)
       saved_word = Word.first(:value => @word)
       saved_word.should be_nil
       @meanings.each { |m| Word.first(:value => m).should be_nil }
     end
 
     it "should not raise error while trying to save the same word again" do
-      2.times { Word.save_with_meanings(@user, @word, @en.value, @pl.value, @meanings).should be_true }
+      2.times { Word.save_with_meanings(@user, @word, @en.id, @pl.id, @meanings).should be_true }
     end
 
     it "should save translation the same word to the same word" do
-      Word.save_with_meanings(@user, @word, @en.value, @en.value, [@word])
+      Word.save_with_meanings(@user, @word, @en.id, @en.id, [@word])
       Word.first(:value => @word).meanings.first(:value => @word).should_not be_nil
     end
   end

@@ -61,8 +61,8 @@ describe WordsController do
         lang = Factory.create(:lang)
         @params = {
           :word => 'word1',
-          :from => lang.value,
-          :to => lang.value,
+          :from_id => lang.id,
+          :to_id => lang.id,
           :meanings => ['word2']
         }
       end

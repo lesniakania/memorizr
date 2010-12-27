@@ -41,7 +41,7 @@ class WordsController < BaseController
   end
 
   def save
-    if Word.save_with_meanings(current_user, params[:word], params[:from], params[:to], params[:meanings])
+    if Word.save_with_meanings(current_user, params[:word], params[:from_id], params[:to_id], params[:meanings])
       render :text => 'Yeah, translation saved!'
     else
       render :text => 'Oops, error, please try again.', :layout => false, :status => :conflict

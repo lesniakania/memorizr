@@ -34,7 +34,7 @@ class Api::WordsController < Api::BaseController
   end
 
   def save
-    if Word.save_with_meanings(current_user, params[:word], params[:from], params[:to], params[:meanings])
+    if Word.save_with_meanings(current_user, params[:word], params[:from_id], params[:to_id], params[:meanings])
       head :ok
     else
       head :conflict

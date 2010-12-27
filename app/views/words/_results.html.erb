@@ -6,8 +6,8 @@
     </div>
   <% else %>
     Translation <span id="word" class="strong">
-      <%= @word.value %></span> from <span id="from" class="strong">
-      <%= @from.value %></span> to <span id="to" class="strong">
+      <%= @word.value %></span> from <span id="from" class="strong" data-id="<%= @from.id %>">
+      <%= @from.value %></span> to <span id="to" class="strong" data-id="<%= @to.id %>">
       <%= @to.value %></span>:
     <ol id="translation" class="custom">
       <% @results.each do |meaning| %>

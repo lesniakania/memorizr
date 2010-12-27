@@ -12,9 +12,9 @@ class Word
 
   belongs_to :lang
 
-  def self.save_with_meanings(user, value, from, to, meanings)
-    lang_from = Lang.first(:value => from)
-    lang_to = Lang.first(:value => to)
+  def self.save_with_meanings(user, value, from_id, to_id, meanings)
+    lang_from = Lang.get(from_id)
+    lang_to = Lang.get(to_id)
     word = Word.first(:value => value, :lang => lang_from) || Word.new(:value => value, :lang => lang_from)
     words = Word.build_meanings(meanings, lang_to)
     

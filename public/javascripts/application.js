@@ -92,8 +92,8 @@ Application.prototype = {
 
     var data = {
       word: $.trim($('#word').text()),
-      from: $.trim($('#from').text()),
-      to: $.trim($('#to').text()),
+      from_id: $.trim($('#from').attr('data-id')),
+      to_id: $.trim($('#to').attr('data-id')),
       meanings: meanings
     }
 
