@@ -12,6 +12,7 @@ gem 'dm-rails'
 gem 'dm-core'
 gem 'dm-validations'
 gem 'dm-migrations'
+gem 'dm-timestamps'
 
 gem 'vidibus-routing_error'
 gem 'heroku'

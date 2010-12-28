@@ -21,15 +21,17 @@ describe Api::WordsController do
         get(api_words_path)
         response.should be_successful
         word = JSON.parse(response.body).first
-        Set.new(word.keys).should == Set.new(['id', 'value', 'lang_id', 'meanings'])
+        Set.new(word.keys).should == Set.new(['id', 'value', 'lang_id', 'created_at', 'meanings'])
         word['id'].should == @word.id
         word['value'].should == @word.value
         word['lang_id'].should == @word.lang_id
+        word['created_at'].should == @word.created_at
         meaning = word['meanings'].first
-        Set.new(meaning.keys).should == Set.new(['id', 'value', 'lang_id'])
+        Set.new(meaning.keys).should == Set.new(['id', 'value', 'lang_id', 'created_at'])
         meaning['id'].should == @meaning.id
         meaning['value'].should == @meaning.value
         meaning['lang_id'].should == @meaning.lang_id
+        meaning['created_at'].should == @meaning.created_at
       end
 
       it "should be able to filter words" do
@@ -59,7 +61,7 @@ describe Api::WordsController do
 
         results = JSON.parse(response.body)
         meaning = results.first
-        Set.new(meaning.keys).should == Set.new(['id', 'value', 'lang_id'])
+        Set.new(meaning.keys).should == Set.new(['id', 'value', 'lang_id', 'created_at'])
         meaning['id'].should == @meaning.id
         meaning['value'].should == @meaning.value
         meaning['lang_id'].should == @meaning.lang_id
