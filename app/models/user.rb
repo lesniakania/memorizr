@@ -19,6 +19,8 @@ class User
   validates_uniqueness_of :email
   validates_length_of :password, :min => 3, :max => 256
 
+  CreatedAtFormat = "%Y-%m-%d %H:%M:%S"
+
   def reload
     @password = nil
     @clear_text_password = nil
@@ -51,7 +53,8 @@ class User
 
   def words_hash_by_languages(from, to)
     words_by_languages(from, to).map do |w|
-      w.hash_format(to).merge({ :created_at => self.user_words.first(:word => w).created_at })
+      w_created_at = self.user_words.first(:word => w).created_at.strftime(CreatedAtFormat)
+      w.hash_format(to).merge({ :created_at => w_created_at })
     end
   end
 

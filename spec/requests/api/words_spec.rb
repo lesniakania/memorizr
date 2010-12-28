@@ -26,7 +26,7 @@ describe Api::WordsController do
         word['id'].should == @word.id
         word['value'].should == @word.value
         word['lang_id'].should == @word.lang_id
-        word['created_at'].should == @user.user_words.first(:word => @word).created_at.to_s
+        word['created_at'].should == @user.user_words.first(:word => @word).created_at.strftime(User::CreatedAtFormat)
         meaning = word['meanings'].first
         Set.new(meaning.keys).should == Set.new(['id', 'value', 'lang_id'])
         meaning['id'].should == @meaning.id
