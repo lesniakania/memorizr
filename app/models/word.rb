@@ -61,7 +61,7 @@ class Word
   end
 
   def hash_format(include_meanings_to = nil)
-    hash = { :id => id, :value => value, :lang_id => lang_id, :created_at => created_at }
+    hash = { :id => id, :value => value, :lang_id => lang_id }
     if include_meanings_to
       hash.merge!({ :meanings => meanings_to(include_meanings_to).map(&:hash_format) })
     end

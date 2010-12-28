@@ -9,12 +9,13 @@ describe Api::WordsController do
     
     describe "index" do
       before(:each) do
-        @word = Factory.create(:word)
+        @word = Factory.create(:word, :lang => Lang.default_from)
         @meaning = Factory.create(:word, :lang => Lang.default_to)
         @word.meanings << @meaning
         @word.save
 
-        @user.expects(:words_by_languages).returns([@word])
+        @user.words << @word
+        @user.save
       end
 
       it "should show only current users words" do
@@ -25,13 +26,12 @@ describe Api::WordsController do
         word['id'].should == @word.id
         word['value'].should == @word.value
         word['lang_id'].should == @word.lang_id
-        word['created_at'].should == @word.created_at
+        word['created_at'].should == @user.user_words.first(:word => @word).created_at.to_s
         meaning = word['meanings'].first
-        Set.new(meaning.keys).should == Set.new(['id', 'value', 'lang_id', 'created_at'])
+        Set.new(meaning.keys).should == Set.new(['id', 'value', 'lang_id'])
         meaning['id'].should == @meaning.id
         meaning['value'].should == @meaning.value
         meaning['lang_id'].should == @meaning.lang_id
-        meaning['created_at'].should == @meaning.created_at
       end
 
       it "should be able to filter words" do
@@ -61,7 +61,7 @@ describe Api::WordsController do
 
         results = JSON.parse(response.body)
         meaning = results.first
-        Set.new(meaning.keys).should == Set.new(['id', 'value', 'lang_id', 'created_at'])
+        Set.new(meaning.keys).should == Set.new(['id', 'value', 'lang_id'])
         meaning['id'].should == @meaning.id
         meaning['value'].should == @meaning.value
         meaning['lang_id'].should == @meaning.lang_id

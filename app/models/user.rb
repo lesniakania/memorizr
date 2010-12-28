@@ -49,6 +49,12 @@ class User
       select { |w| w.meanings.any? { |m| m.lang == to } }
   end
 
+  def words_hash_by_languages(from, to)
+    words_by_languages(from, to).map do |w|
+      w.hash_format(to).merge({ :created_at => self.user_words.first(:word => w).created_at })
+    end
+  end
+
   def hash_format
     { :id => id }
   end

@@ -4,11 +4,8 @@ class Api::WordsController < Api::BaseController
   def index
     @from = Lang.get(params[:from]) || Lang.default_from
     @to = Lang.get(params[:to]) || Lang.default_to
-    @available_langs = Lang.available_langs
 
-    @words = current_user.words_by_languages(@from, @to)
-
-    render :json => @words.map { |w| w.hash_format(@to) }
+    render :json => current_user.words_hash_by_languages(@from, @to)
   end
 
   def translate
