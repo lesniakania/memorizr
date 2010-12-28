@@ -2,21 +2,22 @@ $heroku = ENV['USER'] ? !! ENV['USER'].match(/^repo\d+/) : ENV.any?{|key, _| key
 
 source 'http://rubygems.org'
 
-gem 'rails'
-gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
+group :production do
+  gem 'rails'
+  gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 
-gem 'nokogiri'
+  gem 'nokogiri'
 
-gem 'dm-postgres-adapter'
-gem 'dm-rails'
-gem 'dm-core'
-gem 'dm-validations'
-gem 'dm-migrations'
-gem 'dm-timestamps'
+  gem 'dm-postgres-adapter'
+  gem 'dm-rails'
+  gem 'dm-core'
+  gem 'dm-validations'
+  gem 'dm-migrations'
+  gem 'dm-timestamps'
 
-gem 'vidibus-routing_error'
-gem 'heroku'
-
+  gem 'vidibus-routing_error'
+  gem 'heroku'
+end
 unless $heroku
   group :development, :test do
     gem 'ruby_core_source', :require => 'ruby_core_source'
