@@ -37,4 +37,13 @@ class Api::WordsController < Api::BaseController
       head :conflict
     end
   end
+
+  def update_positions
+    params[:words].each do |w|
+      user_word = current_user.user_words.first(:word_id => w[:id])
+      user_word.update(:position => w[:position]) if user_word
+    end
+
+    head :ok
+  end
 end

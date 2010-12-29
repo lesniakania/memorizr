@@ -27,6 +27,7 @@ Memorizr::Application.routes.draw do
         collection do
           post :translate
           post :save
+          post :update_positions
         end
       end
 

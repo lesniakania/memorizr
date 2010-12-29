@@ -22,7 +22,7 @@ describe Api::WordsController do
         get(api_words_path)
         response.should be_successful
         word = JSON.parse(response.body).first
-        Set.new(word.keys).should == Set.new(['id', 'value', 'lang_id', 'created_at', 'meanings'])
+        Set.new(word.keys).should == Set.new(['id', 'value', 'lang_id', 'position', 'created_at', 'meanings'])
         word['id'].should == @word.id
         word['value'].should == @word.value
         word['lang_id'].should == @word.lang_id
@@ -117,6 +117,25 @@ describe Api::WordsController do
         UserWord.any_instance.stubs(:destroy).returns(false)
         delete(api_word_path(@word))
         response.status.should == 409
+      end
+    end
+
+    describe "update_positions" do
+      it "should update positions properly" do
+        words = (1..2).map { Factory.create(:word, :lang => @en) }
+        user_words = words.map { |w| UserWord.create(:user => @user, :word => w) }
+
+        params = {
+          :words => [
+            { :id => words[0].id, :position => user_words[1].position },
+            { :id => words[1].id, :position => user_words[0].position }
+          ]
+        }
+        post(update_positions_api_words_path, params)
+        response.should be_successful
+        
+        @user.user_words.first(:word => words[0]).position.should == user_words[1].position
+        @user.user_words.first(:word => words[1]).position.should == user_words[0].position
       end
     end
   end

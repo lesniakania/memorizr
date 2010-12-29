@@ -53,8 +53,8 @@ class User
 
   def words_hash_by_languages(from, to)
     words_by_languages(from, to).map do |w|
-      w_created_at = self.user_words.first(:word => w).created_at.strftime(CreatedAtFormat)
-      w.hash_format(to).merge({ :created_at => w_created_at })
+      user_word = self.user_words.first(:word => w)
+      w.hash_format(to).merge({ :created_at => user_word.created_at.strftime(CreatedAtFormat), :position => user_word.position })
     end
   end
 
