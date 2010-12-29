@@ -1,5 +1,4 @@
 var Application = function() {
-  this.initFilter();
   this.initTranslate();
   this.initSave();
   this.initWordsList();
@@ -7,16 +6,6 @@ var Application = function() {
 };
 
 Application.prototype = {
-
-  initFilter: function() {
-    var button = $('#filter-form').find('input[type=submit]');
-    this.filterSpinner = new ButtonSpinner(button);
-    button.click($.proxy(this.onFilter, this));
-  },
-
-  onFilter: function(e) {
-    this.filterSpinner.start();
-  },
   
   initTranslate: function() {
     $('#word_value').focus();

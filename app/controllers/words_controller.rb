@@ -2,8 +2,8 @@ class WordsController < BaseController
   before_filter :ensure_authenticated
 
   def index
-    @from = Lang.get(params[:from]) || Lang.default_from
-    @to = Lang.get(params[:to]) || Lang.default_to
+    @from = Lang.get(params[:from_id]) || Lang.default_from
+    @to = Lang.get(params[:to_id]) || Lang.default_to
     @available_langs = Lang.available_langs
 
     @words = current_user.words_by_languages(@from, @to)

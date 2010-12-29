@@ -2,8 +2,8 @@ class Api::WordsController < Api::BaseController
   before_filter :ensure_authenticated
 
   def index
-    @from = Lang.get(params[:from]) || Lang.default_from
-    @to = Lang.get(params[:to]) || Lang.default_to
+    @from = Lang.get(params[:from_id]) || Lang.default_from
+    @to = Lang.get(params[:to_id]) || Lang.default_to
 
     render :json => current_user.words_hash_by_languages(@from, @to)
   end
