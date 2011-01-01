@@ -3,12 +3,7 @@ class Api::SessionsController < Api::BaseController
     if basic_authenticate!
       render :json => current_user.hash_format
     else
-      head :conflict
+      head :unauthorized
     end
-  end
-
-  def logout
-    session.delete(:user_id)
-    head :ok
   end
 end
