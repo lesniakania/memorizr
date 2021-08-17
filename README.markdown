@@ -1,5 +1,3 @@
-[Run](#-run)
-
 # memorizr
 is tool for translate and mark down words
 
@@ -11,7 +9,7 @@ is tool for translate and mark down words
  * copy config/database.yml.example to config/database.yml
  * modify it to fit to your database
 
-## ✅ Run
+## Run
  * bundle exec rails server
 
 
